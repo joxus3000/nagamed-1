@@ -144,7 +144,7 @@ app.put("/forgot-password", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
+ 
 
 // 📌 ADD APPOINTMENT
 app.post("/appointments", async (req, res) => {
@@ -168,6 +168,41 @@ app.post("/appointments", async (req, res) => {
   }
 });
 
+
+// Patients GET APPOINTMENTS
+app.get("/appointments/:patient_id", async (req, res) => {
+  try {
+    const { patient_id } = req.params;
+    const [appointments] = await db.query("SELECT * FROM Appointment WHERE patient_id = ?", [patient_id]);
+    res.json({ appointments });
+  } catch (err) {
+    console.error("❌ Error fetching appointments:", err.message);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// Doctors GET APPOINTMENTS
+app.get("/appointments", async (req, res) => {
+  try {
+    const [appointments] = await db.query("SELECT * FROM Appointment");
+    res.json({ appointments });
+  } catch (err) {
+    console.error("❌ Error fetching appointments:", err.message);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// Get appointment that corresponds to doctor_id
+app.get("/appointments/:doctor_id", async (req, res) => {
+  try {
+    const { doctor_id } = req.params;
+    const [appointments] = await db.query("SELECT * FROM Appointment WHERE doctor_id = ?", [doctor_id]);
+    res.json({ appointments });
+  } catch (err) {
+    console.error("❌ Error fetching appointments:", err.message);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 // 🌟 Start Server
 const PORT = 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
