@@ -5,6 +5,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
 
+//Download dotenv // pip install dotenv
+
 const app = express();
 
 // ✅ Middleware setup
@@ -16,9 +18,9 @@ app.use(cors());
 const dbConfig = {
   host: process.env.DB_HOST || "127.0.0.1",
   user: process.env.DB_USER || "root",
-  password: process.env.DB_PASSWORD || "jednikko",
+  password: process.env.DB_PASSWORD || "nagamed",
   database: process.env.DB_NAME || "ClinicDB",  // ✅ Ensure this matches .env
-  port: process.env.DB_PORT || 3307,
+  port: process.env.DB_PORT || 3306,
 };
 
 let db;
